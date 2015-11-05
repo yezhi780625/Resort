@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<script src="price_regularDay.jsonp"></script>
+	<script type="text/javascript">
+        function readJSON(){
+		    var x = 0;
+			var rooms=jsonstr;
+			for(idx in rooms) {
+				var date = new Date();
+				date.setDate(date.getDate() + 40);
+				if(date.getDay()==5||date.getDay()==6)
+					rooms[idx].price=500+parseInt(rooms[idx].price);
+				if(rooms[idx].value.indexOf("301")!=-1)
+					document.getElementById('roomSelect').options[roomSelect.options.length] = new Option(rooms[idx].name+","+rooms[idx].price,rooms[idx].value+rooms[idx].price,true,true);
+				else
+					document.getElementById('roomSelect').options[roomSelect.options.length] = new Option(rooms[idx].name+","+rooms[idx].price,rooms[idx].value+rooms[idx].price);
+			}
+        }
+	</script>
+</head>
+<body onload ="readJSON()">
+	<form action="http://resort.cht.com.tw/use_reserve/pre_mho_speed_submitorder.php" method="post">
+		<select name="room_h[]" id="roomSelect">
+		</select>
+		<input type='submit'>
+		<!--<script language="JavaScript">document.myform.submit();</script>-->
+	</form>
+</body>
+</html>
